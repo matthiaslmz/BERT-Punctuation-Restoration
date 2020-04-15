@@ -1,0 +1,18 @@
+{
+    "general":{
+        "bert_pretrained_model": "C:/Users/MatthiasL/Desktop/DATA/ghdata/models/bert-base-uncased",
+        "train_batch_size": 4,
+        "eval_batch_size": 8
+    },
+    "data":{
+        "cached_train_path": "C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/train/cached_train.pt",
+        "cached_eval_path": "C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/eval/cached_eval.pt"
+    },
+    "training":{
+        "learning_rate": 3e-5,
+        "num_epochs": 5,
+        "warmup_ratio": 0.1,
+        "ckpt_path":"C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/checkpoints/checkpoint-%04d",
+        "output_path":"C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/out/checkpoint-%04d"
+    }
+}

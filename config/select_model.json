@@ -1,0 +1,8 @@
+{
+    "general":{
+        "train_loss": "../ghdata/BERTPunctuationRestoration/experiment4/out/train_loss_41000.txt",
+        "eval_loss": "../ghdata/BERTPunctuationRestoration/experiment4/out/eval_loss_41000.txt",
+        "train_acc": "../ghdata/BERTPunctuationRestoration/experiment4/out/train_accuracy_41000.txt",
+        "eval_acc": "../ghdata/BERTPunctuationRestoration/experiment4/out/eval_accuracy_41000.txt"
+    }
+}
