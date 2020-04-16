@@ -1,0 +1,7 @@
+{
+    "general":{
+        "test_loader_path": "C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/test/cached_test.pt",
+        "model_path":"C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/checkpoints/checkpoint-0000/",
+        "id_2_punc": {"0": "\"\"", "1": ".", "4": "?"}
+    }
+}

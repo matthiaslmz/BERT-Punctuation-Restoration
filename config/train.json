@@ -2,7 +2,8 @@
     "general":{
         "bert_pretrained_model": "C:/Users/MatthiasL/Desktop/DATA/ghdata/models/bert-base-uncased",
         "train_batch_size": 4,
-        "eval_batch_size": 8
+        "eval_batch_size": 8,
+        "num_labels": 3
     },
     "data":{
         "cached_train_path": "C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/train/cached_train.pt",

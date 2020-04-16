@@ -19,7 +19,7 @@ class PunctuationRestorationPipeline:
     def __init__(self,
                  bert_pretrained_model="bert-base-uncased",
                  bert_pretrained_tokenizer=None,
-                 train_batch_size=6,
+                 train_batch_size=8,
                  eval_batch_size=8,
                  num_labels=5,
                  learning_rate=3e-5,

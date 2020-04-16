@@ -7,11 +7,11 @@ import numpy as np
 from tqdm import tqdm
 from sklearn.metrics import confusion_matrix
 
-from pytorch_transformers import (BertConfig,
-                                  BertTokenizer,
-                                  BertForTokenClassification,
-                                  AdamW,
-                                  WarmupLinearSchedule)
+from transformers import (BertConfig,
+                        BertTokenizer,
+                        BertForTokenClassification,
+                        AdamW,
+                        get_linear_schedule_with_warmup)
 
 class PunctuationRestorationPipeline:
 
@@ -68,9 +68,9 @@ class PunctuationRestorationPipeline:
         # instantiate optimizer
         optimizer = AdamW(self.model.parameters(),
                           lr=learning_rate)
-        scheduler = WarmupLinearSchedule(optimizer,
-                                         warmup_steps=num_warmup_steps,
-                                         t_total=num_total_steps)
+        scheduler = get_linear_schedule_with_warmup(optimizer,
+                                         num_warmup_steps=num_warmup_steps,
+                                         num_training_steps=num_total_steps)
 
         # define empty lists and counters to keep track of metrics
         iter_count = 0

@@ -121,18 +121,18 @@ def plot_confusion_matrix(cm, classes,
 
     plt.show()
 
-def evaluate_model(test_loader, model, id_2_punc={"0": "\"\"", "1": "."}, path=None):
+def evaluate_model(test_loader_path, model_path, id_2_punc, path=None):
     """
     Function to test the trained BERT model. Input, labels and attention tensors are loaded to GPU by default.
     If using CPU, please remove `..to(DEVICE)` after unsqueezing tensors.
 
     Parameters
     ----------
-    test_loader: A torch dataset that consist of inputs, labels, and attention tensors
+    test_loader_path: Path of the test torch dataset that consist of inputs, labels, and attention tensors
 
-    model: Model that is used for test. 
+    model_path: Path of trained model used for test. 
 
-    id_2_punc: mapping of the encoded punctuation back to the original punctuation.
+    id_2_punc: mapping of the encoded punctuation back to the original punctuation. e.g.,{"0": "\"\"", "1": "."}
 
     path: String that contains the path to save the confusion matrix image
 
@@ -143,7 +143,9 @@ def evaluate_model(test_loader, model, id_2_punc={"0": "\"\"", "1": "."}, path=N
 
     evaluate_model(test_loader, model, id_2_punc={"0": "\"\"", "1": ".", "2": "?"} )
     """
+    test_loader = torch.load(test_loader_path)
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+    model = BertForTokenClassification.from_pretrained(model_path).to(DEVICE)
 
     total_test_loss = 0
     total_num_correct = 0
