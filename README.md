@@ -12,6 +12,7 @@ Clone the repo:
     git clone https://github.com/matthiaslmz/BERT-Punctuation-Restoration.git
 
 Next, create a new conda environment:
+
     conda env create -f enviroment.yml
     conda activate whatisbert
 
@@ -24,5 +25,8 @@ Make sure to download `bert-base-uncased` model, vocab and config file @:
 ### CUDA
 1. If an error occurs, first make sure that you have a GPU that is available.
 2. If error persists, it could be that the defined training batch size is too large for the GPU, decrease if necessary
-3. By default in `pipeline.py`, if a GPU is available, `torch.cuda.is_available()` defaults to the first GPU, indexed `0`. If you need to use the $X^{th}$ GPU, make sure to edit like the following: `DEVICE = "cuda:X-1" if torch.cuda.is_available() else cpu`
+3. By default in `pipeline.py`, if a GPU is available, `torch.cuda.is_available()` defaults to the first GPU, indexed `0`. If you need to use the X^{th} GPU, make sure to edit like the following: `DEVICE = "cuda:X-1" if torch.cuda.is_available() else cpu`
+
+
+
 
