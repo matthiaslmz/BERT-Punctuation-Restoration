@@ -1,0 +1,9 @@
+{
+    "general":{
+        "kept_punctuation": ".,?",
+        "punc_2_id": {"": 0, ".": 1, ",": 2, "$": 3, "?": 4},
+        "raw_dataset_path": "C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/cornell_movie-dialogs_corpus/",
+        "preprocessed_transcription_path": "C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/",
+        "cached_path": "C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/%s/"
+    }
+}
