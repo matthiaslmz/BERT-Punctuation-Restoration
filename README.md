@@ -27,6 +27,5 @@ Make sure to download `bert-base-uncased` model, vocab and config file @:
 2. If error persists, it could be that the defined training batch size is too large for the GPU, decrease if necessary
 3. By default in `pipeline.py`, if a GPU is available, `torch.cuda.is_available()` defaults to the first GPU, indexed `0`. If you need to use the X^{th} GPU, make sure to edit like the following: `DEVICE = "cuda:X-1" if torch.cuda.is_available() else cpu`
 
-
-
-
+### IMPORTANT!
+When deciding the number of punctuations you want to keep using the `kept_punctuation` parameter in `create_moveis_dataset()`, you **MUST** also make sure that the number of heads in the final layer of the model is same. This can be specified with the `num_labels` in BERTPuncResto

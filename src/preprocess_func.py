@@ -538,5 +538,7 @@ def create_movies_dataset(tokenizer,
         train_dset = torch.load(cached_train_path)
         print("Loading movies eval torch dataset from:",cached_eval_path)
         eval_dset = torch.load(cached_eval_path)
+        print("Loading movies test torch dataset from:",cached_test_path)
+        test_dset = torch.load(cached_eval_path)
 
-    return train_dset, eval_dset
+    return train_dset, eval_dset, test_dset

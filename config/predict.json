@@ -1,7 +1,7 @@
 {
     "general":{
-        "test_loader_path": "C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/test/cached_test.pt",
-        "model_path":"C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/checkpoints/checkpoint-0000/",
+        "test_loader": "/misc/labshare/datasets5/callme/experiments/punctuation_restoration/data/test/pre_processed/experiment4/train140_eval25_test17/movies/cached_test.pt",
+        "model": "/misc/labshare/datasets5/callme/experiments/punctuation_restoration/models/experiment4/train80_eval10_movies/checkpoints/checkpoint-15000",
         "id_2_punc": {"0": "\"\"", "1": ".", "4": "?"}
     }
 }

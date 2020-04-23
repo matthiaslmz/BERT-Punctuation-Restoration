@@ -12,7 +12,7 @@ from transformers import (BertConfig,
                         AdamW,
                         get_linear_schedule_with_warmup)
 
-class PunctuationRestorationPipeline:
+class BERTPuncResto:
 
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -26,9 +26,8 @@ class PunctuationRestorationPipeline:
                  transcriptions_path=None,
                  inputs_path=None,
                  labels_path=None,
-                 cached_train_path=None,
-                 cached_eval_path=None,
-                 dataset_path=None):
+                 cached_train_path_or_dataset=None,
+                 cached_eval_path_or_dataset=None):
 
         # define hyperparameters
         self.train_batch_size = train_batch_size
@@ -42,14 +41,22 @@ class PunctuationRestorationPipeline:
             bert_pretrained_model, config=self.config).to(self.DEVICE)
         self.tokenizer = BertTokenizer.from_pretrained(bert_pretrained_model)
 
-        # creating / loading datasets
-        self.train_dset = torch.load(cached_train_path)
-        self.eval_dset = torch.load(cached_eval_path)
-        self.train_loader = DataLoader(self.train_dset,
-                                       batch_size=self.train_batch_size,
-                                       shuffle=True)
-        self.eval_loader = DataLoader(self.eval_dset,
-                                      batch_size=self.eval_batch_size)
+        if all(isinstance(i, str) for i in [cached_train_path_or_dataset, cached_eval_path_or_dataset]):
+            self.train_dset = torch.load(cached_train_path_or_dataset)
+            self.eval_dset = torch.load(cached_eval_path_or_dataset)
+            self.train_loader = DataLoader(self.train_dset,
+                                        batch_size=self.train_batch_size,
+                                        shuffle=True)
+            self.eval_loader = DataLoader(self.eval_dset,
+                                        batch_size=self.eval_batch_size)
+        elif all(isinstance(i, torch.utils.data.dataset.Subset) for i in [cached_train_path_or_dataset, cached_eval_path_or_dataset]):
+            self.train_dset = cached_train_path_or_dataset
+            self.eval_dset = cached_eval_path_or_dataset
+            self.train_loader = DataLoader(self.train_dset,
+                                        batch_size=self.train_batch_size,
+                                        shuffle=True)
+            self.eval_loader = DataLoader(self.eval_dset,
+                                        batch_size=self.eval_batch_size)
     
     def train_model(self,
                     num_epochs=20,

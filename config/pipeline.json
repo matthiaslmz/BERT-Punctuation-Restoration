@@ -1,0 +1,39 @@
+{
+    "create_movies":{
+        "kept_punctuation": ".,?",
+        "punc_2_id": {"": 0, ".": 1, ",": 2, "$": 3, "?": 4},
+        "raw_dataset_path": "/misc/labshare/datasets5/callme/data/external/cornell_movie_dialogs_corpus/",
+        "preprocessed_transcription_path": "/misc/labshare/datasets5/callme/experiments/punctuation_restoration/data/all/pre_processed/pipe/train140_eval25_test17/movies/",
+        "cached_path": "/misc/labshare/datasets5/callme/experiments/punctuation_restoration/data/%s/pre_processed/pipe/train140_eval25_test17/movies/"
+    },
+    "general":{
+        "bert_pretrained_model": "/misc/labshare/datasets1/speech/models/bert-base-uncased",
+        "train_batch_size": 8,
+        "eval_batch_size": 8,
+        "num_labels": 4
+    },
+    "data":{
+        "cached_train_path_or_dataset": "/misc/labshare/datasets5/callme/experiments/punctuation_restoration/data/training/pre_processed/pipe/train140_eval25_test17/movies/cached_training.pt",
+        "cached_eval_path_or_dataset": "/misc/labshare/datasets5/callme/experiments/punctuation_restoration/data/eval/pre_processed/pipe/train140_eval25_test17/movies/cached_eval.pt"
+    },
+    "training":{
+        "learning_rate": 3e-5,
+        "num_epochs": 5,
+        "warmup_ratio": 0.1,
+        "ckpt_path":"/misc/labshare/datasets5/callme/experiments/punctuation_restoration/models/experiment4/train80_eval10_movies/checkpoints/checkpoint-%04d",
+        "output_path":"/misc/labshare/datasets5/callme/experiments/punctuation_restoration/models/experiment4/train80_eval10_movies/out/checkpoint-%04d"
+    },
+
+    "select_model":{
+        "train_loss": "/misc/labshare/datasets5/callme/experiments/punctuation_restoration/models/experiment4/train140_eval25_combined/out/checkpoint-47000/train_loss_47000.txt",
+        "eval_loss": "/misc/labshare/datasets5/callme/experiments/punctuation_restoration/models/experiment4/train140_eval25_combined/out/checkpoint-47000/eval_loss_47000.txt",
+        "train_acc": "/misc/labshare/datasets5/callme/experiments/punctuation_restoration/models/experiment4/train140_eval25_combined/out/checkpoint-47000/train_accuracy_47000.txt",
+        "eval_acc": "/misc/labshare/datasets5/callme/experiments/punctuation_restoration/models/experiment4/train140_eval25_combined/out/checkpoint-47000/eval_accuracy_47000.txt"
+    },
+
+    "predict":{
+        "test_loader": "/misc/labshare/datasets5/callme/experiments/punctuation_restoration/data/test/pre_processed/experiment4/train140_eval25_test17/movies/cached_test.pt",
+        "id_2_punc": {"0": "\"\"", "1": ".", "4": "?"}
+    }
+
+}

@@ -1,17 +1,42 @@
 import itertools
+import os
 from tqdm import tqdm
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
 from transformers import BertForTokenClassification
 from sklearn.metrics import confusion_matrix, plot_confusion_matrix, precision_recall_fscore_support, accuracy_score
+from src.preprocess_func import read_files_in_dir_ext
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt 
 
-def plot_loss_accuracy(train_loss, eval_loss, train_acc, eval_acc, path):
+def get_train_loss_files(output_path, extension):
     """
-    Plots the accuracy and loss values for each checkpoint accumulated over all epochs
+    Returns the latest file names of the training accuracy, training loss, validation accuracy, and 
+    validation loss in the checkpoint path directory
+
+    e.g., ['train_loss_50000.txt', 'eval_loss_50000.txt', 'train_accuracy_50000.txt', 'eval_accuracy_50000.txt']
+    Parameters
+    ----------
+    output_path: str
+        Directory where the training and validation loss and accuracy files were saved. 
+        This path should be the same as `output_path` parameter in `train_model()` 
+    """
+    last_output = [files for files in os.listdir(output_path) if os.path.isdir(os.path.join(output_path, files))][-1]
+    last_output_path = os.path.join(output_path, last_output)
+    train_loss, eval_loss, train_acc, eval_acc, _ = read_files_in_dir_ext(last_output_path, extension)
+    
+    return (os.path.join(last_output_path, train_loss), 
+            os.path.join(last_output_path, eval_loss),
+            os.path.join(last_output_path, train_acc),
+            os.path.join(last_output_path, eval_acc))
+
+def plot_loss_accuracy(train_loss, eval_loss, train_acc, eval_acc, path, image_name):
+    """
+    Returns the checkpoint path file name with the lowest evaluation loss to be used for evaluate_model() and
+    saves the log loss + accuracy VS epoch graph.
+
     Parameters
     ----------
     train_loss: str
@@ -27,8 +52,17 @@ def plot_loss_accuracy(train_loss, eval_loss, train_acc, eval_acc, path):
         Text file path containing the eval accuracy
 
     path: str
-        File path to save the image
+        Directory where the image will be saved 
+    
+    image_name: str
+        Name of the training and validation log loss + accuracy VS epoch plot to be saved. e.g., "loss_acurracy.png"
     """
+
+    if not os.path.exists(path):
+        try:
+            os.makedirs(path)
+        except FileExistsError:
+            pass
 
     t_loss = pd.read_csv(train_loss, sep="\n", names=["train_loss"])
     e_loss = pd.read_csv(eval_loss, sep="\n", names=["eval_loss"])
@@ -56,10 +90,12 @@ def plot_loss_accuracy(train_loss, eval_loss, train_acc, eval_acc, path):
     sns.lineplot(data=df_acc, ax=ax2, legend=False)
 
     print("Saving image..")
-    plt.savefig(path)
+    saved_path = os.path.join(path, image_name)
+    plt.savefig(saved_path)
     print("Image saved at:", path)
 
     plt.show()
+    return "checkpoint-" + str(e_loss.idxmin()[0]*1000)
 
     
 
@@ -121,20 +157,22 @@ def plot_confusion_matrix(cm, classes,
 
     plt.show()
 
-def evaluate_model(test_loader_path, model_path, id_2_punc, path=None):
+def evaluate_model(test_loader, model, id_2_punc, path=None, image_name=None):
     """
     Function to test the trained BERT model. Input, labels and attention tensors are loaded to GPU by default.
     If using CPU, please remove `..to(DEVICE)` after unsqueezing tensors.
 
     Parameters
     ----------
-    test_loader_path: Path of the test torch dataset that consist of inputs, labels, and attention tensors
+    test_loader: Path of the test torch dataset that consist of inputs, labels, and attention tensors
 
-    model_path: Path of trained model used for test. 
+    model: Path of trained model used for test. 
 
-    id_2_punc: mapping of the encoded punctuation back to the original punctuation. e.g.,{"0": "\"\"", "1": "."}
+    id_2_punc: mapping of the encoded punctuation back to the original punctuation. e.g.,{"0": "\"\"", "1": "." ,"2": "?"}
 
     path: String that contains the path to save the confusion matrix image
+
+    image_name: Name of the confusion matrix image to be saved. e.g., "confusion_matrix1.png"
 
     Example:
     ---------
@@ -143,9 +181,11 @@ def evaluate_model(test_loader_path, model_path, id_2_punc, path=None):
 
     evaluate_model(test_loader, model, id_2_punc={"0": "\"\"", "1": ".", "2": "?"} )
     """
-    test_loader = torch.load(test_loader_path)
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-    model = BertForTokenClassification.from_pretrained(model_path).to(DEVICE)
+
+    if all(isinstance(i, str) for i in [test_loader, model]):
+        test_loader = torch.load(test_loader)
+        model = BertForTokenClassification.from_pretrained(model).to(DEVICE)
 
     total_test_loss = 0
     total_num_correct = 0
@@ -196,8 +236,10 @@ def evaluate_model(test_loader_path, model_path, id_2_punc, path=None):
             np.array([accuracy, precision, recall, f1]),
             columns=list(id_2_punc.values())[0:],
             index=['Accuracy', 'Precision', 'Recall', 'F1'])
+
+        conf_matrix_path = os.path.join(path, image_name)
         
-        plot_confusion_matrix(conf_matrix, classes=list(id_2_punc.values())[0:], path=path)
+        plot_confusion_matrix(conf_matrix, classes=list(id_2_punc.values())[0:], path=conf_matrix_path)
         print("eval loss:", eval_loss,"\n")
         print("eval_accuracy:", eval_accuracy,"\n")
 

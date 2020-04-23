@@ -6,8 +6,8 @@
         "num_labels": 3
     },
     "data":{
-        "cached_train_path": "C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/train/cached_train.pt",
-        "cached_eval_path": "C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/eval/cached_eval.pt"
+        "cached_train_path_or_dataset": "C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/train/cached_train.pt",
+        "cached_train_eval_or_dataset": "C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/eval/cached_eval.pt"
     },
     "training":{
         "learning_rate": 3e-5,
