@@ -1,6 +1,6 @@
 {
     "general":{
-        "output_path": "/misc/labshare/datasets5/callme/experiments/punctuation_restoration/models/pipe/out/",
+        "output_path": "C:/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/out/",
         "extension": "txt"
     }
 }

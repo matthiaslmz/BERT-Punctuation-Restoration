@@ -21,12 +21,3 @@ def main(image_name,
 
 if __name__ == "__main__":
     main(image_name="plot1.png")
-
-#     {
-#     "general":{
-#         "train_loss": "C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/out/checkpoint-41000/train_loss_41000.txt",
-#         "eval_loss": "C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/out/checkpoint-41000/eval_loss_41000.txt",
-#         "train_acc": "C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/out/checkpoint-41000/train_accuracy_41000.txt",
-#         "eval_acc": "C:/Users/MatthiasL/Desktop/DATA/ghdata/BERTPunctuationRestoration/data/experiment4/out/checkpoint-41000/eval_accuracy_41000.txt"
-#     }
-# }
